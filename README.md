@@ -2,7 +2,7 @@
 
 Confidential SPL transfers integrated into the live RIFT fiat-to-crypto ATM on Solana mainnet, using Umbra's Arcium-MPC-backed stealth UTXO protocol.
 
-**Frontier 2026 - Build with Umbra Side Track ($10K USDC).**
+
 
 ---
 
