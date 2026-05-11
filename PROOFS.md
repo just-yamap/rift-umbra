@@ -110,4 +110,4 @@ Publishing all of that would expose security-sensitive infrastructure unrelated 
 
 ## License
 
-MIT — Yann Mapouka <yamap@riftatm.com>
+MIT License

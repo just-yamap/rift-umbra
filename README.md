@@ -11,39 +11,33 @@ Confidential SPL transfers integrated into the live RIFT fiat-to-crypto ATM on S
 RIFT is a live fiat-to-crypto ATM running on Solana mainnet. When a customer purchases crypto at the kiosk, the BUY flow can deliver tokens either publicly (Jupiter → customer ATA) or **confidentially** via Umbra: after the Jupiter swap lands tokens in the operator's ATA, the integration creates a stealth UTXO locked to the customer's Umbra commitment, breaking the on-chain link between operator and recipient.
 
 The integration is **additive** to the existing BUY flow, **fail-safe** (public fallback if Umbra fails), and gated by `USE_UMBRA=1` for safe deployment.
-
 ## Architecture
-┌──────────────────────────────┐
-│  Customer BUYS at ATM kiosk  │
-│  (e.g. €50 → USDT)          │
-└──────────┬───────────────────┘
-│
-▼
-┌──────────────────────────────────────┐
-│ 1. lock_buy_claim (mainnet, Anchor)  │  Claim PDA created
-└──────────┬───────────────────────────┘
-│
-▼
-┌──────────────────────────────────────┐
-│ 2. Jupiter swap USDC → target SPL    │  Tokens land in operator's public ATA
-└──────────┬───────────────────────────┘
-│
-▼
-┌──────────────────────────────────────────────┐
-│ 3. Umbra createUtxoForReceiver               │  Stealth UTXO locked to
-│    (Arcium MPC + Poseidon commitment)        │  customer's Umbra commitment
-└──────────┬───────────────────────────────────┘
-│
-▼
-┌──────────────────────────────────────┐
-│ 4. confirm_dispensed (mainnet)        │  32-byte Poseidon commitment
-│    umbra_commitment: [u8; 32]         │  stored on-chain (audit trail,
-│                                       │  amount + recipient HIDDEN)
-└───────────────────────────────────────┘
+
+```
+
+Customer BUYS at ATM kiosk (e.g. €50 → USDT)
+↓
+lock_buy_claim (mainnet, Anchor)
+→ Claim PDA created on-chain
+↓
+Jupiter swap USDC → target SPL
+→ Tokens land in operator's public ATA
+↓
+Umbra createUtxoForReceiver
+→ Arcium MPC creates a stealth UTXO
+→ Poseidon commitment locked to customer
+↓
+confirm_dispensed (mainnet)
+→ 32-byte Poseidon commitment stored on-chain
+→ Amount and recipient HIDDEN (audit trail only)
+```
+
+
 
 If any step in the Umbra branch fails (SDK error, indexer down, receiver not registered), the integration catches the error and falls back to a **public Jupiter transfer** to the customer's ATA — the customer always receives their tokens.
 
 ## Repository layout
+```
 rift-umbra/
 ├── integration/
 │   └── umbra.js                       Production module (262 LOC)
@@ -54,6 +48,7 @@ rift-umbra/
 ├── README.md                           This file
 ├── WIRING.md                           Integration points in atm-connector.js
 └── PROOFS.md                           Live production evidence
+```
 
 ## Module API
 
@@ -113,4 +108,4 @@ With `USE_UMBRA=0` (default), the integration is fully inert: no SDK is loaded, 
 
 ## License
 
-MIT — Yann Mapouka <yamap@riftatm.com>
+MIT License
