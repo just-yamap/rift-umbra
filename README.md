@@ -1,8 +1,8 @@
-# RIFT ATM × Umbra Privacy
+# RIFT ATM x Umbra Privacy
 
 Confidential SPL transfers integrated into the live RIFT fiat-to-crypto ATM on Solana mainnet, using Umbra's Arcium-MPC-backed stealth UTXO protocol.
 
-**Frontier 2026 — Build with Umbra Side Track ($10K USDC).**
+**Frontier 2026 - Build with Umbra Side Track ($10K USDC).**
 
 ---
 
@@ -34,7 +34,7 @@ confirm_dispensed (mainnet)
 
 
 
-If any step in the Umbra branch fails (SDK error, indexer down, receiver not registered), the integration catches the error and falls back to a **public Jupiter transfer** to the customer's ATA — the customer always receives their tokens.
+If any step in the Umbra branch fails (SDK error, indexer down, receiver not registered), the integration catches the error and falls back to a **public Jupiter transfer** to the customer's ATA - the customer always receives their tokens.
 
 ## Repository layout
 ```

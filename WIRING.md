@@ -26,7 +26,7 @@ async function getCachedUmbraClient() {
 }
 ```
 
-The full set of params (`rpcSubscriptionsUrl` + `indexerApiEndpoint`) is required by SDK 4.0.0 — passing only `signer + network + rpcUrl` causes a `Cannot read properties of undefined (reading 'match')` crash inside the SDK.
+The full set of params (`rpcSubscriptionsUrl` + `indexerApiEndpoint`) is required by SDK 4.0.0 - passing only `signer + network + rpcUrl` causes a `Cannot read properties of undefined (reading 'match')` crash inside the SDK.
 
 ---
 
@@ -55,7 +55,7 @@ if (CFG.useUmbra && operatorAcc.privacyMode) {
     umbraDeliverySig = result.signature;
     console.log(`[BUY] Umbra confidential delivery sig=${umbraDeliverySig.slice(0,12)}...`);
   } catch (e) {
-    console.warn(`[BUY] Umbra confidential delivery failed: ${e.message} — executing PUBLIC FALLBACK delivery`);
+    console.warn(`[BUY] Umbra confidential delivery failed: ${e.message} - executing PUBLIC FALLBACK delivery`);
     // Public fallback: standard SPL transfer from operator ATA to customer ATA
     umbraDeliverySig = await publicSplTransfer({ targetMint, amount: deliveredAtomics, destPubkey });
     console.log(`[BUY] Public fallback delivery successful: ${deliveredAtomics} of ${targetMint.toBase58().slice(0,8)}... → customer (sig=${umbraDeliverySig.slice(0,12)}...)`);
@@ -85,9 +85,9 @@ pub fn confirm_dispensed(
 }
 ```
 
-The commitment is stored verbatim in the Claim PDA — providing an immutable on-chain audit trail of "a confidential UTXO was created for this BUY", without revealing amount or recipient.
+The commitment is stored verbatim in the Claim PDA - providing an immutable on-chain audit trail of "a confidential UTXO was created for this BUY", without revealing amount or recipient.
 
-This 32-byte slot is the same slot Cloak uses for its commitment (the slot is generic — any 32-byte commitment from a privacy protocol can live there).
+This 32-byte slot is the same slot Cloak uses for its commitment (the slot is generic - any 32-byte commitment from a privacy protocol can live there).
 
 ---
 
@@ -100,7 +100,7 @@ Once a stealth UTXO is created for the customer, the customer (or their wallet) 
 3. Submit the withdraw to Umbra's relayer.
 4. Receive the SPL tokens on their public ATA.
 
-This is independent of RIFT (the customer never interacts with RIFT after the BUY) — they hold the UTXO commitment and can claim it whenever they want.
+This is independent of RIFT (the customer never interacts with RIFT after the BUY) - they hold the UTXO commitment and can claim it whenever they want.
 
 ---
 
@@ -158,7 +158,7 @@ The next privacy-mode BUY will route through Umbra. Look for in the log:
 [BUY] Umbra confidential delivery sig=<signature>...
 
 If Umbra is unavailable, the log shows the fail-safe in action:
-[BUY] Umbra confidential delivery failed: <reason> — executing PUBLIC FALLBACK delivery
+[BUY] Umbra confidential delivery failed: <reason> - executing PUBLIC FALLBACK delivery
 [BUY] Public fallback delivery successful: ... → customer
 
 The customer receives their tokens either way.
